@@ -70,7 +70,7 @@ public class NaverService {
 
         createToken(member, response);
 
-        return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "회원가입 성공"));
+        return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "로그인 성공", member.getId()));
     }
 
     private JsonElement getTokens(String code) throws IOException {

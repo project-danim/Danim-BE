@@ -2,6 +2,8 @@ package com.project.danim_be.member.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.danim_be.common.util.Message;
+import com.project.danim_be.member.dto.CheckIdRequestDto;
+import com.project.danim_be.member.dto.CheckNicknameRequestDto;
 import com.project.danim_be.member.dto.LoginRequestDto;
 import com.project.danim_be.member.dto.SignupRequestDto;
 import com.project.danim_be.member.service.GoogleService;
@@ -9,7 +11,6 @@ import com.project.danim_be.member.service.KakaoService;
 import com.project.danim_be.member.service.MemberService;
 import com.project.danim_be.member.service.NaverService;
 import com.project.danim_be.security.auth.UserDetailsImpl;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -47,6 +48,24 @@ public class MemberController {
 		}else{
 			return memberService.signup(signupRequestDto);
 		}
+	}
+
+	//일반 회원가입 아이디 중복 검사
+	@PostMapping("/checkId")
+	public ResponseEntity<Message> checkId(@RequestBody CheckIdRequestDto checkIdRequestDto) {
+		return memberService.checkId(checkIdRequestDto);
+	}
+
+	//일반 회원가입 닉네임 중복 검사
+	@PostMapping("/checkNickname")
+	public ResponseEntity<Message> checkNickname(@RequestBody CheckNicknameRequestDto checkNicknameRequestDto) {
+		return memberService.checkNickname(checkNicknameRequestDto);
+  }
+
+	//회원가입시 랜덤 닉네임 생성
+	@GetMapping("/randomNickname")
+	public ResponseEntity<Message> nicknameCreate() {
+		return memberService.nicknameCreate();
 	}
 
 	//로그인

@@ -84,7 +84,7 @@ public class KakaoService {
 
 		System.out.println(tokenDto.getAccessToken());
 
-		Message message = Message.setSuccess(StatusEnum.OK,"회원 가입 성공");
+		Message message = Message.setSuccess(StatusEnum.OK,"로그인 성공", kakaoUser.getId());
 		return new ResponseEntity<>(message, HttpStatus.OK);
 		// return accessToken;
 	}

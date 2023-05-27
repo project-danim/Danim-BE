@@ -2,6 +2,8 @@ package com.project.danim_be.member.service;
 
 import com.project.danim_be.common.exception.CustomException;
 import com.project.danim_be.common.util.Message;
+import com.project.danim_be.member.dto.CheckIdRequestDto;
+import com.project.danim_be.member.dto.CheckNicknameRequestDto;
 import com.project.danim_be.member.dto.SignupRequestDto;
 import com.project.danim_be.member.entity.Member;
 import com.project.danim_be.member.repository.MemberRepository;
@@ -32,6 +34,10 @@ class MemberServiceTest {
     private MemberRepository memberRepository;
     @Mock
     private SignupRequestDto signupRequestDto;
+    @Mock
+    private CheckIdRequestDto checkIdRequestDto;
+    @Mock
+    private CheckNicknameRequestDto checkNicknameRequestDto;
 
     @Test
     @DisplayName("회원가입 성공 테스트")
@@ -55,16 +61,14 @@ class MemberServiceTest {
     @DisplayName("userId 중복 예외 확인")
     void duplicateMemberTest() {
         // given
-        signupRequestDto = new SignupRequestDto("limslki333@hanmail.net",
-                "1234", "우아한사자", "30-39");
-        signupRequestDto = new SignupRequestDto("limslki333@hanmail.net",
-                "4321", "용감한토끼", "20-29");
+        checkIdRequestDto = new CheckIdRequestDto("limslki333@hanmail.net");
+        checkIdRequestDto = new CheckIdRequestDto("limslki333@hanmail.net");
 
         // when, then
         try {
-            memberService.signup(signupRequestDto);
+            memberService.checkId(checkIdRequestDto);
         } catch (CustomException e) {
-            assertEquals("사용자 등록 오류입니다.", e.getMessage());
+            assertEquals("중복된 아이디 입니다.", e.getErrorCode().getDetail());
         }
     }
 
@@ -72,16 +76,14 @@ class MemberServiceTest {
     @DisplayName("닉네임 중복 예외 확인")
     void duplicateNicknameTest() {
         // given
-        signupRequestDto = new SignupRequestDto("limslki333@hanmail.net",
-                "1234", "우아한사자", "30-39");
-        signupRequestDto = new SignupRequestDto("limseulki333@gmail.com",
-                "4321", "우아한사자", "20-29");
+        checkNicknameRequestDto = new CheckNicknameRequestDto("우아한사자");
+        checkNicknameRequestDto = new CheckNicknameRequestDto("우아한사자");
 
         // when, then
         try {
-            memberService.signup(signupRequestDto);
+            memberService.checkNickname(checkNicknameRequestDto);
         } catch (CustomException e) {
-            assertEquals("사용자 등록 오류입니다.", e.getMessage());
+            assertEquals("중복된 닉네임 입니다.", e.getErrorCode().getDetail());
         }
     }
 
