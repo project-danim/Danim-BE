@@ -90,6 +90,7 @@ public class WebSecurityConfig {
 		configuration.addAllowedOrigin("http://127.0.0.1:3000");
 
 		configuration.addExposedHeader(JwtUtil.ACCESS_KEY);
+		configuration.addExposedHeader(JwtUtil.REFRESH_KEY);
 		//어떤데이터
 		configuration.addAllowedHeader("*");
 		//모든 방식(GET, POST, PUT, DELETE 등)으로 데이터를 요청할 수 있게함
