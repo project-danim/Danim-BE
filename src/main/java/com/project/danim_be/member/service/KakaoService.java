@@ -62,13 +62,14 @@ public class KakaoService {
 	public ResponseEntity<Message> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
 		JsonNode tokenData = getToken(code);
 		String accessToken = tokenData.get("access_token").asText();
+		System.out.println("1.====================================================");
 		System.out.println("accessToken : "+accessToken);
-
+		System.out.println("2.====================================================");
 		KakaoMemberInfoDto kakaoUserInfo = getKakaoMemberInfo(accessToken);
 		Member kakaoUser = kakaoSignup(kakaoUserInfo);
-		System.out.println("1.====================================================");
+		System.out.println("3.====================================================");
 		String refreshTokenValue = tokenData.get("refresh_token").asText();
-		System.out.println("2.====================================================");
+		System.out.println("4.====================================================");
 		System.out.println("refreshToken : "+refreshTokenValue);
 		RefreshToken refreshToken = new RefreshToken(refreshTokenValue, kakaoUserInfo.getEmail(), "KAKAO");
 		refreshTokenRepository.save(refreshToken);
