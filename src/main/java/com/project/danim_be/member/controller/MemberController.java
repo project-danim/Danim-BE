@@ -53,6 +53,7 @@ public class MemberController {
 	//일반 회원가입 아이디 중복 검사
 	@PostMapping("/checkId")
 	public ResponseEntity<Message> checkId(@RequestBody CheckIdRequestDto checkIdRequestDto) {
+		
 		return memberService.checkId(checkIdRequestDto);
 	}
 
