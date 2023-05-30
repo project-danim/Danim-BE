@@ -66,8 +66,9 @@ public class KakaoService {
 
 		KakaoMemberInfoDto kakaoUserInfo = getKakaoMemberInfo(accessToken);
 		Member kakaoUser = kakaoSignup(kakaoUserInfo);
-
+		System.out.println("1.====================================================");
 		String refreshTokenValue = tokenData.get("refresh_token").asText();
+		System.out.println("2.====================================================");
 		System.out.println("refreshToken : "+refreshTokenValue);
 		RefreshToken refreshToken = new RefreshToken(refreshTokenValue, kakaoUserInfo.getEmail(), "KAKAO");
 		refreshTokenRepository.save(refreshToken);
