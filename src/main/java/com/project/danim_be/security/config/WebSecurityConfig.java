@@ -55,15 +55,7 @@ public class WebSecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	//h2콘솔 접근허용
-//	@Bean
-//	@Order(Ordered.HIGHEST_PRECEDENCE)	// 이 필터체인이 다른필터체인보다 우선순위가 높음을 표시.
-//	SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
-//		http.securityMatcher(PathRequest.toH2Console());	//h2콘솔에 대한 요청만 체인을 사용한다.
-//		http.csrf((csrf) -> csrf.disable());				//csrf에대한 보호를 비활성한다.
-//		http.headers((headers) -> headers.frameOptions((frame) -> frame.sameOrigin()));
-//		return http.build();
-//	}
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -95,6 +87,7 @@ public class WebSecurityConfig {
 		//접근할수있는 포트설정
 		configuration.addAllowedOrigin("http://localhost:3000");
 		configuration.addAllowedOrigin("http://localhost:8080");
+		configuration.addAllowedOrigin("http://127.0.0.1:3000");
 
 		configuration.addExposedHeader(JwtUtil.ACCESS_KEY);
 		//어떤데이터
