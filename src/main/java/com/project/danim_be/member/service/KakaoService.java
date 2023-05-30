@@ -62,14 +62,12 @@ public class KakaoService {
 	public ResponseEntity<Message> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
 		JsonNode tokenData = getToken(code);
 		String accessToken = tokenData.get("access_token").asText();
-		System.out.println("1.====================================================");
 		System.out.println("accessToken : "+accessToken);
-		System.out.println("2.====================================================");
+
 		KakaoMemberInfoDto kakaoUserInfo = getKakaoMemberInfo(accessToken);
 		Member kakaoUser = kakaoSignup(kakaoUserInfo);
-		System.out.println("3.====================================================");
+
 		String refreshTokenValue = tokenData.get("refresh_token").asText();
-		System.out.println("4.====================================================");
 		System.out.println("refreshToken : "+refreshTokenValue);
 		RefreshToken refreshToken = new RefreshToken(refreshTokenValue, kakaoUserInfo.getEmail(), "KAKAO");
 		refreshTokenRepository.save(refreshToken);
@@ -144,15 +142,10 @@ public class KakaoService {
 		JsonNode jsonNode = objectMapper.readTree(responseBody);
 		Long id = jsonNode.get("id").asLong();//아이디
 		String email = jsonNode.get("kakao_account").get("email").asText();	// 이메일
-		String gender = jsonNode.get("kakao_account").get("gender").asText();//성별
-		String age_range = jsonNode.get("kakao_account").get("age_range").asText(); // 연령대
-		System.out.println("id = "+id);
 		System.out.println("email = "+email);
-		System.out.println("gender = "+gender);
-		System.out.println("ageRange = "+ age_range);
 
 		log.info("카카오 사용자 정보: " + id +"// email"+email);
-		return new KakaoMemberInfoDto(email,gender,age_range);
+		return new KakaoMemberInfoDto(email);
 	}
 
 	public Member kakaoSignup(KakaoMemberInfoDto kakaoMemberInfoDto) {
@@ -167,8 +160,8 @@ public class KakaoService {
 			// kakaoMember = new Member(email, password, ageRange,gender,nickname);
 			Member member = Member.builder()
 				.userId(kakaoMemberInfoDto.getEmail())
-				.ageRange(kakaoMemberInfoDto.getAgeRange())
-				.gender(kakaoMemberInfoDto.getGender())
+				.ageRange(" Test ageRange")
+				.gender("Test gender")
 				.nickname(nickname)
 				.password(password)
 				.provider("KAKAO")
