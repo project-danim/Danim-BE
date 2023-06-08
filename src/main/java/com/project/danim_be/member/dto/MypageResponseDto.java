@@ -12,11 +12,13 @@ public class MypageResponseDto {
     private String imageUrl;
     private String content;
     private Boolean owner;
+    private Double score;
 
     public MypageResponseDto(Member member, Boolean owner) {
         this.nickname = member.getNickname();
         this.imageUrl = member.getImageUrl();
         this.content = member.getContent();
         this.owner = owner;
+        this.score = member.getScore();
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long>, QuerydslPredicateExecutor<ChatRoom> {
-	Optional<ChatRoom> findByRoomId(String roomId);
+	Optional<ChatRoom> findByRoomName(String roomName);
 
 	// Optional<ChatRoom> findByChatMessage(ChatMessage chatMessage);
 

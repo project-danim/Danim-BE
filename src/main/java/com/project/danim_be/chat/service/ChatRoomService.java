@@ -57,7 +57,7 @@ public class ChatRoomService {
 		List <ChatRoom> chatRooms = chatRoomRepository.findAll();
 		List<ChatRoomIdDto> chatRoomIdDtos = new ArrayList<>();
 		for(ChatRoom c : chatRooms){
-			String roomId = c.getRoomId();
+			String roomId = c.getRoomName();
 			ChatRoomIdDto dto = new ChatRoomIdDto(roomId);
 			chatRoomIdDtos.add(dto);
 		}
@@ -66,7 +66,7 @@ public class ChatRoomService {
 
 	public ResponseEntity<Message> roomMember(RoomIdRequestDto roomIdRequestDto) {
 		log.info(roomIdRequestDto.getRoomId());
-		ChatRoom chatRoom =chatRoomRepository.findByRoomId(roomIdRequestDto.getRoomId())
+		ChatRoom chatRoom =chatRoomRepository.findByRoomName(roomIdRequestDto.getRoomId())
 			.orElseThrow(()->new CustomException(ErrorCode.ROOM_NOT_FOUND));
 		System.out.println("chatRoom : "+chatRoom.getId());
 		List<MemberChatRoom> memberChatRoomList = memberChatRoomRepository.findAllByChatRoom_Id(chatRoom.getId());
@@ -141,24 +141,25 @@ public class ChatRoomService {
 			}
 		}
 		// 모집 인원이 다 차기 전까지 신청 가능
-		List<ChatRoomDto> chatRoomDtoList = null;
+		List<String> chatRoomDtoList = new ArrayList<>();
+		chatRoomDtoList.add(chatRoom.getRoomName());
 		if (post.getNumberOfParticipants() < post.getGroupSize()) {
 			// 작성자가 아니고?? 방에 처음 들어온다면 참여인원 +1
-			if (!memberChatRoomRepository.existsByMember_IdAndChatRoom_RoomId(member.getId(), chatRoom.getRoomId())) {
+			if (!memberChatRoomRepository.existsByMember_IdAndChatRoom_RoomName(member.getId(), chatRoom.getRoomName())) {
 				post.incNumberOfParticipants();
 				postRepository.save(post);
 
 				// 채팅방 입장 시 모든 유저 nickname 보내주기
 				List<MemberChatRoom> memberChatRoomList = memberChatRoomRepository.findAllByChatRoom_Id(id);
-				chatRoomDtoList = new ArrayList<>();
 				for (MemberChatRoom memberChatRoom : memberChatRoomList) {
-					chatRoomDtoList.add(new ChatRoomDto(memberChatRoom));
+					chatRoomDtoList.add(memberChatRoom.getMember().getNickname());
 				}
 			}
 		} else {
 			throw new CustomException(ErrorCode.COMPLETE_MATCHING);
 		}
-		return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "채팅방 입장", chatRoomDtoList));
+
+		return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "모임 신청 완료", chatRoomDtoList));
 	}
 
 

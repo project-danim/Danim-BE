@@ -4,6 +4,7 @@ import com.project.danim_be.common.util.Message;
 import com.project.danim_be.post.dto.ImageRequestDto;
 import com.project.danim_be.post.dto.PostRequestDto;
 import com.project.danim_be.post.service.PostService;
+import com.project.danim_be.post.service.SearchService;
 import com.project.danim_be.security.auth.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
 	private final PostService postService;
+	private final SearchService searchService;
 
 	@Operation(summary = "게시글 작성 API", description = "게시글 작성")
 	@PostMapping(value = "api/post",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -36,7 +38,7 @@ public class PostController {
 	@Operation(summary = "게시글 조회 API", description = "게시글 조회")
 	@GetMapping("api/post/{postId}")
 	public ResponseEntity<Message> readPost(@PathVariable("postId") Long id){
-		return postService.readPost(id);
+		return searchService.readPost(id);
 	}
 
 	@Operation(summary = "게시글 수정 API", description = "게시글 수정")

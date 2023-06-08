@@ -113,6 +113,7 @@ public class WebSecurityConfig {
 		configuration.addAllowedOrigin("https://da-nim.com/");
 
 
+
 		configuration.addExposedHeader(JwtUtil.ACCESS_KEY);
 		configuration.addExposedHeader(JwtUtil.REFRESH_KEY);
 		//어떤데이터

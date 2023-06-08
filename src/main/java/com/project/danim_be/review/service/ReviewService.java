@@ -36,6 +36,17 @@ public class ReviewService {
                 () -> new CustomException(ErrorCode.POST_NOT_FOUND)
         );
 
+        //Mile계산식
+        Member planner =memberRepository.findById(post.getMember().getId())
+            .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
+        Double score= reviewRequestDto.getScore();
+        score-=3;
+        score = score/(post.getNumberOfParticipants());
+        score *= (10+post.getNumberOfParticipants())/10.0;
+        score +=planner.getScore();
+        // 0.6
+        planner.setScore(score);
+
         // 작성 여부 체크
         if(!reviewRepository.existsByMember_IdAndPost_Id(member.getId(), postId)){
             Date tripEndDate = post.getTripEndDate();
@@ -62,5 +73,8 @@ public class ReviewService {
         } else {
             throw new CustomException(ErrorCode.ALREADY_WRITTEN);
         }
+
+
+
     }
 }

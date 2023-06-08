@@ -47,13 +47,13 @@ public class ChatMessageService {
 	//채팅방 입장멤버 저장메서드	ENTER
 	@Transactional
 	public void visitMember(ChatDto chatDto) {
-		String roomId = chatDto.getRoomId();
+		String roomName = chatDto.getRoomId();
 		String sender = chatDto.getSender();
 		//sender(nickName)을 통해서 멤버를찾고
 		Member member = memberRepository.findByNickname(sender)
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 		//roomId를 통해서 생성된 채팅룸을 찾고
-		ChatRoom chatRoom= chatRoomRepository.findByRoomId(roomId)
+		ChatRoom chatRoom= chatRoomRepository.findByRoomName(roomName)
 			.orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 		chatRoomService.joinChatRoom(chatRoom.getId(),member);
 		//MemberChatRoom 에 멤버와 챗룸 연결되어있는지 찾는다
@@ -61,7 +61,7 @@ public class ChatMessageService {
 		// 강퇴당한사람인지 검사한다.
 
 		//첫 연결시도이면
-		if(isFirstVisit(member.getId(),roomId)){
+		if(isFirstVisit(member.getId(),roomName)){
 
 			memberChatRoom = new MemberChatRoom(member, chatRoom);
 			memberChatRoom.setFirstJoinRoom(LocalDateTime.now());	//맨처음 연결한시간과
@@ -77,9 +77,9 @@ public class ChatMessageService {
 	//메시지저장  TALK
 	@Transactional
 	public void sendMessage(ChatDto chatDto) {
-		String roomId = chatDto.getRoomId();
+		String roomName = chatDto.getRoomId();
 
-		ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
+		ChatRoom chatRoom = chatRoomRepository.findByRoomName(roomName)
 			.orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 		Member sendMember = memberRepository.findByNickname(chatDto.getSender())
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -114,12 +114,12 @@ public class ChatMessageService {
 	//방을 나갔는지확인해야함 	LEAVE
 	@Transactional
 	public void leaveChatRoom(ChatDto chatDto) {
-		String roomId = chatDto.getRoomId();
+		String roomName = chatDto.getRoomId();
 		String sender = chatDto.getSender();
 
 		Member member = memberRepository.findByNickname(sender)
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-		ChatRoom chatRoom= chatRoomRepository.findByRoomId(roomId)
+		ChatRoom chatRoom= chatRoomRepository.findByRoomName(roomName)
 			.orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 		MemberChatRoom memberChatRoom = memberChatRoomRepository.findByMemberAndChatRoom(member, chatRoom)
 			.orElseThrow(() -> new CustomException(ErrorCode.FAIL_FIND_MEMBER_CHAT_ROOM));
@@ -132,7 +132,7 @@ public class ChatMessageService {
 	public void kickMember(ChatDto chatDto) {
 
 		System.out.println(chatDto.getSender());
-		ChatRoom chatRoom = chatRoomRepository.findByRoomId(chatDto.getRoomId())
+		ChatRoom chatRoom = chatRoomRepository.findByRoomName(chatDto.getRoomId())
 			.orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 		System.out.println("chatRoom.getAdminMemberId() : " +  memberRepository.findById(chatRoom.getAdminMemberId()));
 		System.out.println("chatRoom.getAdminMemberId() : " +  chatRoom.getAdminMemberId());
@@ -170,13 +170,13 @@ public class ChatMessageService {
 	//메시지조회
 	@Transactional(readOnly = true)
 	public ResponseEntity<Message> chatList(ChatDto chatDto){
-		String roomId = chatDto.getRoomId();
+		String roomName = chatDto.getRoomId();
 		String nickName= chatDto.getSender();
 
 		Member member = memberRepository.findByNickname(nickName)
 			.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-		if (chatDto.getSender().equals(member.getNickname()) && isFirstVisit(member.getId(),roomId)){
+		if (chatDto.getSender().equals(member.getNickname()) && isFirstVisit(member.getId(),roomName)){
 			List<ChatDto> allChats = allChatList(chatDto);
 			Message message = Message.setSuccess(StatusEnum.OK,"게시글 작성 성공");
 			return new ResponseEntity<>(message, HttpStatus.OK);
@@ -187,15 +187,15 @@ public class ChatMessageService {
 		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 	//첫방문 확인
-	private boolean isFirstVisit(Long memberId, String roomId){
-		return !memberChatRoomRepository.existsByMember_IdAndChatRoom_RoomId(memberId, roomId);
+	private boolean isFirstVisit(Long memberId, String roomName){
+		return !memberChatRoomRepository.existsByMember_IdAndChatRoom_RoomName(memberId, roomName);
 		//xistsBy 메소드는 특정 조건을 만족하는 데이터가 존재하는지를 검사하고
 		// 그 결과를 boolean으로 반환
 	}
 	//채팅메시지 목록 보여주기
 	private List<ChatDto> allChatList(ChatDto chatDto){
 		String roomId = chatDto.getRoomId();
-		ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId)
+		ChatRoom chatRoom = chatRoomRepository.findByRoomName(roomId)
 			.orElseThrow(() -> new CustomException(ErrorCode.ROOM_NOT_FOUND));
 
 		List<ChatMessage> chatList = chatMessageRepository.findAllByChatRoom(chatRoom);
@@ -204,7 +204,7 @@ public class ChatMessageService {
 		List<ChatDto> chatDtoList = chatList.stream()
 			.map(chatMessage -> ChatDto.builder()
 				.type(chatMessage.getType())
-				.roomId(chatMessage.getChatRoom().getRoomId())
+				.roomId(chatMessage.getChatRoom().getRoomName())
 				.sender(chatMessage.getSender())
 				.message(chatMessage.getMessage())
 				.build())

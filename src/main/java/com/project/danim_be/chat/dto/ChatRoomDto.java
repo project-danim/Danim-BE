@@ -9,8 +9,11 @@ import lombok.Setter;
 @Setter
 public class ChatRoomDto {
     private String member;
+    private String roomName;
+
 
     public ChatRoomDto(MemberChatRoom memberChatRoom) {
+        this.roomName = memberChatRoom.getChatRoom().getRoomName();
         this.member = memberChatRoom.getMember().getNickname();
     }
 }

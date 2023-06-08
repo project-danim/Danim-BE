@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberChatRoomRepository extends JpaRepository<MemberChatRoom,Long> {
-	boolean existsByMember_IdAndChatRoom_RoomId(Long memberId, String roomId);
+	boolean existsByMember_IdAndChatRoom_RoomName(Long memberId, String roomName);
 	boolean existsByMember_IdAndChatRoom_Id(Long memberId, Long roomId);
 	Optional<MemberChatRoom> findByMemberAndChatRoom(Member member, ChatRoom chatRoom);
 	List<MemberChatRoom> findByChatRoom(ChatRoom chatRoom);
 	Optional<MemberChatRoom> findByMember(Member member);
 	List<MemberChatRoom> findAllByChatRoom_Id(Long id);
+
 }

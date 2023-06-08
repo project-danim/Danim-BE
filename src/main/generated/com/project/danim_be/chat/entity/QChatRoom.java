@@ -32,7 +32,7 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public final com.project.danim_be.post.entity.QPost post;
 
-    public final StringPath roomId = createString("roomId");
+    public final StringPath roomName = createString("roomName");
 
     public QChatRoom(String variable) {
         this(ChatRoom.class, forVariable(variable), INITS);

@@ -38,6 +38,8 @@ public class SearchController {
     }
 }
 
+
+
 // 만약 파람을 써야한다면 이걸로
 //Pageable pageable,
 //    @RequestParam(value = "ageRange", required = false) String ageRange,

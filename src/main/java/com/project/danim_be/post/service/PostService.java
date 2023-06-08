@@ -95,9 +95,9 @@ public class PostService {
 
 
 
-		String roomId = UUID.randomUUID().toString();
+		String roomName = UUID.randomUUID().toString();
 		ChatRoom chatRoom =ChatRoom.builder()
-			.roomId(roomId)
+			.roomName(roomName)
 			.post(post)
 			.adminMemberId(post.getMember().getId())
 			.build();
@@ -185,19 +185,8 @@ public class PostService {
 		}
 		return file;
 	}
-	// 게시글 상세 조회
-	@Transactional(readOnly = true)
-	public ResponseEntity<Message> readPost(Long id) {
 
-		Post post = postRepository.findById(id).orElseThrow(()
-			->new CustomException(ErrorCode.POST_NOT_FOUND));
 
-		PostResponseDto postResponseDto = new PostResponseDto(post);
-
-		Message message = Message.setSuccess(StatusEnum.OK, "게시글 단일 조회 성공", postResponseDto);
-		return new ResponseEntity<>(message, HttpStatus.OK);
-
-	}
 
 
 }

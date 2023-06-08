@@ -43,6 +43,8 @@ public class Member extends Timestamped {
 
 	private Boolean isDeleted;		//탈퇴 여부
 
+	private Double score;		//점수
+
 	public Member(String userId, String password, String nickname) {
 		this.userId = userId;
 		this.password = password;
@@ -52,7 +54,7 @@ public class Member extends Timestamped {
   }
 
 	@Builder
-	public Member(String userId, String gender, String password, String nickname, String ageRange, String provider, Boolean isDeleted, Boolean agreeForAge, Boolean agreeForGender) {
+	public Member(String userId, String gender, String password, String nickname, String ageRange, String provider, Boolean isDeleted, Boolean agreeForAge, Boolean agreeForGender, Double score) {
 		this.userId = userId;
 		this.gender = gender;
 		this.password = password;
@@ -62,6 +64,7 @@ public class Member extends Timestamped {
 		this.isDeleted = isDeleted;
 		this.agreeForGender = agreeForGender;
 		this.agreeForAge = agreeForAge;
+		this.score = score;
 	}
 
 	public void editMember (MypageRequestDto mypageRequestDto,String imageUrl) {

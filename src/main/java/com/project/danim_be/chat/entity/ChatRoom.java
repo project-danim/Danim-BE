@@ -18,7 +18,7 @@ public class ChatRoom {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String roomId;					//방번호
+	private String roomName;					//방번호
 	private Long adminMemberId;
 
 	@OneToMany(mappedBy = "chatRoom")

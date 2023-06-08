@@ -86,6 +86,7 @@ public class MemberService {
 				.agreeForAge(agreeForAge)
 				.provider("GENERAL")
 				.isDeleted(false)
+				.score(20.0)
 				.build();
 
 		memberRepository.save(member);
