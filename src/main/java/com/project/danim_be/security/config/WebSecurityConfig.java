@@ -118,9 +118,9 @@ public class WebSecurityConfig {
 		configuration.addExposedHeader(JwtUtil.ACCESS_KEY);
 		configuration.addExposedHeader(JwtUtil.REFRESH_KEY);
 		//어떤데이터
-		configuration.addAllowedHeader("Content-Type", "ACCESS_KEY", "REFRESH_KEY");
+		configuration.addAllowedHeaders("Content-Type", "ACCESS_KEY", "REFRESH_KEY");
 		//모든 방식(GET, POST, PUT, DELETE 등)으로 데이터를 요청할 수 있게함
-		configuration.addAllowedMethod("GET", "POST", "PUT", "DELETE");
+		configuration.addAllowedMethods("GET", "POST", "PUT", "DELETE");
 
 		configuration.setAllowCredentials(true);
 
