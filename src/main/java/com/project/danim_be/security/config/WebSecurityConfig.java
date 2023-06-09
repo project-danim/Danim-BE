@@ -110,6 +110,7 @@ public class WebSecurityConfig {
 		configuration.addAllowedOrigin("https://jxy.me/**");
 		configuration.addAllowedOrigin("https://jxy.me/");
 		configuration.addAllowedOrigin("https://danim-https-1018737567.ap-northeast-2.elb.amazonaws.com/");
+		configuration.addAllowedOrigin("https://da-nim.com");
 		configuration.addAllowedOrigin("https://da-nim.com/**");
 		configuration.addAllowedOrigin("https://da-nim.com:443/**");
 
