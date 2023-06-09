@@ -103,23 +103,31 @@ public class WebSecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 
 		//접근할수있는 포트설정
-		configuration.addAllowedOrigin("http://localhost:3000");
-		configuration.addAllowedOrigin("http://localhost:8080");
-		configuration.addAllowedOrigin("http://127.0.0.1:3000");
-		configuration.addAllowedOrigin("http://localhost:63342");
-		configuration.addAllowedOrigin("http://jxy.me/**");
-		configuration.addAllowedOrigin("http://jxy.me/");
+		configuration.addAllowedOrigin("https://localhost:3000");
+		configuration.addAllowedOrigin("https://localhost:8080");
+		configuration.addAllowedOrigin("https://127.0.0.1:3000");
+		configuration.addAllowedOrigin("https://localhost:63342");
+		configuration.addAllowedOrigin("https://jxy.me/**");
+		configuration.addAllowedOrigin("https://jxy.me/");
 		configuration.addAllowedOrigin("https://danim-https-1018737567.ap-northeast-2.elb.amazonaws.com/");
-		configuration.addAllowedOrigin("https://da-nim.com/");
+		configuration.addAllowedOrigin("https://da-nim.com/**");
+		configuration.addAllowedOrigin("https://da-nim.com:443/**");
 
 
 
 		configuration.addExposedHeader(JwtUtil.ACCESS_KEY);
 		configuration.addExposedHeader(JwtUtil.REFRESH_KEY);
+		
 		//어떤데이터
-		configuration.addAllowedHeader("*");
+		configuration.addAllowedHeader("Content-Type");
+		configuration.addAllowedHeader("ACCESS_KEY");
+		configuration.addAllowedHeader("REFRESH_KEY");
+		
 		//모든 방식(GET, POST, PUT, DELETE 등)으로 데이터를 요청할 수 있게함
-		configuration.addAllowedMethod("*");
+		configuration.addAllowedMethod("GET");
+		configuration.addAllowedMethod("POST");
+		configuration.addAllowedMethod("PUT");
+		configuration.addAllowedMethod("DELETE");
 
 		configuration.setAllowCredentials(true);
 
