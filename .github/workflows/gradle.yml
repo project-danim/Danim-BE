@@ -16,11 +16,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: resource 폴더 생성
-        run: |
-          mkdir -p resources
-          find .
-        shell: bash
           
       - name: Gradle 캐싱
         uses: actions/cache@v3
@@ -30,6 +25,9 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('*/.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle-
+          
+      - name: Resource 폴더 생성
+        run: mkdir -p ./src/main/resources/
           
       - name: properties 생성
         run: touch ./src/main/resources/application.properties
