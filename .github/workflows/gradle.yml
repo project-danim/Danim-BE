@@ -16,6 +16,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: resource 폴더 생성
+        run: |
+          mkdir -p resources
+          find .
+        shell: bash
           
       - name: Gradle 캐싱
         uses: actions/cache@v3
