@@ -10,6 +10,9 @@
  	@Override
  	public void addCorsMappings(CorsRegistry registry) {
  		registry.addMapping("/**")
- 			.allowedOrigins("https://da-nim.com:443");
+ 			.allowedOrigins("https://da-nim.com:443")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+        ;
  	}
  }
