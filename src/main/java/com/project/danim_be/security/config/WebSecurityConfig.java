@@ -23,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin("\*")
 public class WebSecurityConfig {
 
 	private final JwtAuthenticationFilter jwtUtil;
