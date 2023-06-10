@@ -271,6 +271,7 @@ public class NaverService {
         return JsonParser.parseString(result.toString());
     }
 
+    
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
         response.addHeader(JwtUtil.ACCESS_KEY, tokenDto.getAccessToken());
         response.addHeader(JwtUtil.REFRESH_KEY, tokenDto.getRefreshToken());
