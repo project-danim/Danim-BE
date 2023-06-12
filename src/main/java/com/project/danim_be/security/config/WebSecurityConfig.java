@@ -105,6 +105,7 @@ public class WebSecurityConfig {
 		configuration.addAllowedOrigin("http://localhost:3000");
 		configuration.addAllowedOrigin("https://localhost:8080");
 		configuration.addAllowedOrigin("http://127.0.0.1:3000");
+		configuration.addAllowedOrigin("https://52.79.162.201:443");
 		configuration.addAllowedOrigin("https://localhost:63342");
 		configuration.addAllowedOrigin("https://jxy.me/**");
 		configuration.addAllowedOrigin("https://jxy.me/");
