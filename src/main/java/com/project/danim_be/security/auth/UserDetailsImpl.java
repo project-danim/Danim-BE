@@ -15,7 +15,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.userId = userId;
 	}
 	public Member getMember() {
-		this.member = member;
+		
 		return member;
 	}
 	@Override
