@@ -53,7 +53,6 @@ public class WebSecurityConfig {
 			"/api/chat/test",
 			"/stomp"
 
-
 	};
 
 	//정적자원은 인증인가를 하지않겠다.
