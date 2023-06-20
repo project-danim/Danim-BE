@@ -1,4 +1,4 @@
-name: Java CI/CD with Docker
+name: Java CI with Docker
 on:
   push:
     branches:
@@ -48,33 +48,33 @@ jobs:
       - name: 테스트 없는 Build
         run: ./gradlew build -x test
         
-      # DockerHub 로그인
-      - name: DockerHub Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME}}
-          password: ${{ secrets.DOCKERHUB_PASSWORD}}
+#       # DockerHub 로그인
+#       - name: DockerHub Login
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME}}
+#           password: ${{ secrets.DOCKERHUB_PASSWORD}}
           
-      # Docker 이미지 빌드
-      - name: Docker Image Build
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.PROJECT_NAME }} .
+#       # Docker 이미지 빌드
+#       - name: Docker Image Build
+#         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.PROJECT_NAME }} .
         
-      # DockerHub Push
-      - name: DockerHub Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+#       # DockerHub Push
+#       - name: DockerHub Push
+#         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
         
-      # EC2 인스턴스 접속 및 애플리케이션 실행
-      - name: Application Run
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            sudo docker kill ${{ secrets.PROJECT_NAME }}
-            sudo docker rm -f ${{ secrets.PROJECT_NAME }}
-            sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
-            --name ${{ secrets.PROJECT_NAME }} \
-            -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+#       # EC2 인스턴스 접속 및 애플리케이션 실행
+#       - name: Application Run
+#         uses: appleboy/ssh-action@v0.1.6
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USERNAME }}
+#           key: ${{ secrets.EC2_KEY }}
+#           script: |
+#             sudo docker kill ${{ secrets.PROJECT_NAME }}
+#             sudo docker rm -f ${{ secrets.PROJECT_NAME }}
+#             sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+#             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+#             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+#             --name ${{ secrets.PROJECT_NAME }} \
+#             -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
