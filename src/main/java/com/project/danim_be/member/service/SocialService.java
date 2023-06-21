@@ -87,8 +87,10 @@ public class SocialService {
 
         createToken(member, response);
 
+        Boolean isExistMember = memberRepository.existsByUserId(member.getUserId());
+
         SseEmitter sseEmitter = notificationService.connectNotification(member.getId());
-        LoginResponseDto loginResponseDto = new LoginResponseDto(member, sseEmitter);
+        LoginResponseDto loginResponseDto = new LoginResponseDto(member, sseEmitter, isExistMember);
 
         return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "로그인 성공", loginResponseDto));
     }

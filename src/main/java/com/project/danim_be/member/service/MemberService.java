@@ -10,6 +10,8 @@ import com.project.danim_be.member.dto.ResponseDto.LoginResponseDto;
 import com.project.danim_be.member.entity.Member;
 import com.project.danim_be.member.repository.MemberRepository;
 import com.project.danim_be.notification.service.NotificationService;
+import com.project.danim_be.post.entity.Post;
+import com.project.danim_be.post.repository.PostRepository;
 import com.project.danim_be.security.jwt.JwtUtil;
 import com.project.danim_be.security.jwt.TokenDto;
 import com.project.danim_be.security.refreshToken.RefreshToken;
@@ -25,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import static com.project.danim_be.common.exception.ErrorCode.FAIL_SIGNOUT;
@@ -41,6 +44,7 @@ public class MemberService {
 	private final SocialService socialService;
 	private final RandomNickname randomNickname;
 	private final NotificationService notificationService;
+	private final PostRepository postRepository;
 
 	//회원가입
 	@Transactional
@@ -176,6 +180,12 @@ public class MemberService {
 	@Transactional
 	public ResponseEntity<Message> signOut(Member member) {
 		member = memberRepository.findById(member.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+		List<Post> posts = postRepository.findByMember_Id(member.getId());
+
+		for(Post post : posts){
+			post.delete();
+		}
 
 		if(!member.getProvider().equals("DANIM")) {
 			try {

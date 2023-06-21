@@ -23,16 +23,17 @@ public class Review extends Timestamped {
 	private Double point;		//점수
 
 	@Column(nullable = false)
-	private String review;		//후기
+	private String comment;		//후기
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
 	private Post post;
 
 	public Review(ReviewRequestDto reviewRequestDto, Post post, Member member) {
-		this.review = reviewRequestDto.getComment();
+		this.comment = reviewRequestDto.getComment();
 		this.point = reviewRequestDto.getScore();
 		this.post = post;
 		this.member = member;

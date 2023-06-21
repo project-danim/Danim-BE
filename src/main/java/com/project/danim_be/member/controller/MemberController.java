@@ -1,5 +1,6 @@
 package com.project.danim_be.member.controller;
 
+import com.project.danim_be.common.Anotation.LogExecutionTime;
 import com.project.danim_be.common.util.Message;
 import com.project.danim_be.member.dto.RequestDto.*;
 import com.project.danim_be.member.service.MailService;
@@ -33,6 +34,7 @@ public class MemberController {
 	//일반 회원가입
 	@Operation(summary = "일반 회원가입 API", description = "일반 회원가입")
 	@PostMapping("/signup")
+	@LogExecutionTime
 	public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequestDto signupRequestDto){
 		return memberService.signup(signupRequestDto);
 	}
@@ -40,14 +42,14 @@ public class MemberController {
 	//일반 회원가입 아이디 중복 검사
 	@Operation(summary = "일반 회원가입 아이디 중복 검사 API", description = "아이디 중복 검사")
 	@PostMapping("/checkId")
-	public ResponseEntity<Message> checkId(@RequestBody CheckIdRequestDto checkIdRequestDto) {
+	public ResponseEntity<Message> checkId(@Valid @RequestBody CheckIdRequestDto checkIdRequestDto) {
 		return memberService.checkId(checkIdRequestDto);
 	}
 
 	//일반 회원가입 닉네임 중복 검사
 	@Operation(summary = "일반 회원가입 닉네임 중복 검사 API", description = "닉네임 중복 검사")
 	@PostMapping("/checkNickname")
-	public ResponseEntity<Message> checkNickname(@RequestBody CheckNicknameRequestDto checkNicknameRequestDto) {
+	public ResponseEntity<Message> checkNickname(@Valid @RequestBody CheckNicknameRequestDto checkNicknameRequestDto) {
 		return memberService.checkNickname(checkNicknameRequestDto);
   }
 
@@ -69,6 +71,7 @@ public class MemberController {
 	//로그인
 	@Operation(summary = "일반 로그인 API", description = "일반 로그인")
 	@PostMapping("/login")
+	@LogExecutionTime
 	public ResponseEntity<Message> login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response ){
 		return memberService.login(requestDto,response);
 	}
@@ -76,6 +79,7 @@ public class MemberController {
 	//로그아웃
 	@Operation(summary = "로그아웃 API", description = "로그아웃")
 	@DeleteMapping("/logout")
+	@LogExecutionTime
 	public ResponseEntity<Message> logout(@AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletRequest request){
 		return memberService.logout(userDetails.getMember(), request);
 	}
@@ -90,6 +94,7 @@ public class MemberController {
 	//카카오 소셜 로그인
 	@Operation(summary = "카카오 소셜 로그인 API", description = "카카오 소셜 로그인")
 	@GetMapping("/kakao/callback")
+	@LogExecutionTime
 	public ResponseEntity<Message> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
 		return socialService.socialLogin("KAKAO", code, response);
 	}
@@ -111,6 +116,7 @@ public class MemberController {
 	//회원 탈퇴
 	@Operation(summary = "회원 탈퇴 API", description = "회원 탈퇴")
 	@DeleteMapping("/delete")
+	@LogExecutionTime
 	public ResponseEntity<Message> signOut(@AuthenticationPrincipal UserDetailsImpl userDetails) {
 		return memberService.signOut(userDetails.getMember());
 	}

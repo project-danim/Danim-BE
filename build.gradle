@@ -31,7 +31,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.26'
     developmentOnly 'org.springframework.boot:spring-boot-devtools:3.0.4'
     runtimeOnly 'com.h2database:h2:2.1.214'
-    runtimeOnly 'com.mysql:mysql-connector-j:8.0.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
     testImplementation 'org.springframework.security:spring-security-test:6.0.2'
@@ -83,12 +82,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 
-
     //json dateTime
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2'
 
     //logging
     implementation 'org.springframework.boot:spring-boot-starter-actuator:3.1.0'
+    implementation 'org.codehaus.janino:janino:3.1.6'
 
     //Schedule
     testImplementation 'org.awaitility:awaitility:4.2.0'
@@ -100,6 +99,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.2'
     implementation 'org.springframework:spring-context-support:5.3.9'
 
+    //AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 // Querydsl 설정부

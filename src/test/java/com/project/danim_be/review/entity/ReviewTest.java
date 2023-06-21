@@ -33,7 +33,7 @@ class ReviewTest {
 
         // when, then
         Assertions.assertEquals(5.0, review.getPoint());
-        Assertions.assertEquals("너무 즐거웠어요!", review.getReview());
+        Assertions.assertEquals("너무 즐거웠어요!", review.getComment());
 
     }
 }

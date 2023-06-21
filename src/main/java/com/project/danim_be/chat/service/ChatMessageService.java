@@ -98,8 +98,8 @@ public class ChatMessageService {
 			.time(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
 			.message(isFirstVisit(member.getId(),roomName) ? chatDto.getSender() + "님이 입장하셨습니다." : "")
 			.build();
-		memberChatRoomRepository.save(memberChatRoom);
 
+		memberChatRoomRepository.save(memberChatRoom);
 		return message;
 
 	}

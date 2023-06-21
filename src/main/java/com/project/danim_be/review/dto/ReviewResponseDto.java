@@ -24,7 +24,7 @@ public class ReviewResponseDto {
         this.id = review.getId();
         this.userImageUrl = review.getMember().getImageUrl();
         this.nickname = review.getMember().getNickname();
-        this.comment = review.getReview();
+        this.comment = review.getComment();
         this.score = review.getPoint();
         this.createdAt = review.getCreatedAt();
     }

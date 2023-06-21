@@ -2,6 +2,7 @@ package com.project.danim_be.mypage.dto.ResponseDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.danim_be.post.entity.Post;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +10,11 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MypagePostResponseDto {
 
     private Long id;
-    private String title;
+    private String postTitle;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date tripEndDate;
     private String content;
@@ -21,7 +23,7 @@ public class MypagePostResponseDto {
 
     public MypagePostResponseDto(Post post, Boolean owner) {
         this.id = post.getId();
-        this.title = post.getPostTitle();
+        this.postTitle = post.getPostTitle();
         this.tripEndDate = post.getTripEndDate();
         this.content = post.getContent();
         if (!post.getImageUrls().isEmpty()) {

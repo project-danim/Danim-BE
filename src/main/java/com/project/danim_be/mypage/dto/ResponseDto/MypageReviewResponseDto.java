@@ -2,6 +2,7 @@ package com.project.danim_be.mypage.dto.ResponseDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.danim_be.review.entity.Review;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,18 +11,19 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MypageReviewResponseDto {
 
-    private String userId;
+    private String nickName;
     private Double point;
-    private String review;
+    private String comment;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     public MypageReviewResponseDto(Review receiveReview) {
-        this.userId = receiveReview.getMember().getNickname();
+        this.nickName = receiveReview.getMember().getNickname();
         this.point = receiveReview.getPoint();
-        this.review = receiveReview.getReview();
+        this.comment = receiveReview.getComment();
         this.createdAt = receiveReview.getCreatedAt();
     }
 }

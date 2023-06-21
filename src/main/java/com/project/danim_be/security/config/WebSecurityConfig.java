@@ -60,7 +60,7 @@ public class WebSecurityConfig {
 			"/info"
 	};
 
-	
+
 
 	//정적자원은 인증인가를 하지않겠다.
 	@Bean

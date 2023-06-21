@@ -64,14 +64,14 @@ public class ReviewService {
                 score += planner.getScore();
                 planner.setScore(score);
 
-                // 여행이 종료된 후에 작성 가능
-                if(afterDate){
+                // 여행이 종료된 후에 작성 가능 (테스트기간 작동 X)
+//                if(afterDate){
                     Review review = new Review(reviewRequestDto, post, member);
                     reviewRepository.save(review);
                     return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "리뷰 작성 완료"));
-                } else {
-                    throw new CustomException(ErrorCode.CANNOT_WRITE_REVIEW);
-                }
+//                } else {
+//                    throw new CustomException(ErrorCode.CANNOT_WRITE_REVIEW);
+//                }
             } else {
                 throw new CustomException(ErrorCode.NOT_WRITE_MEMBER);
             }

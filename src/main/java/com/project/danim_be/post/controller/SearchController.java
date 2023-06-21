@@ -1,5 +1,6 @@
 package com.project.danim_be.post.controller;
 
+import com.project.danim_be.common.Anotation.LogExecutionTime;
 import com.project.danim_be.common.util.Message;
 import com.project.danim_be.common.util.StatusEnum;
 import com.project.danim_be.post.dto.RequestDto.SearchRequestDto;
@@ -26,12 +27,14 @@ public class SearchController {
 
     @Operation(summary = "전체 게시글 조회 API", description = "전체 페이지 조회")
     @GetMapping("/")
+    @LogExecutionTime
     public ResponseEntity<Message> allPosts(Pageable pageable) {
         return searchService.allPosts(pageable);
     }
 
     @Operation(summary = "게시글 상세 검색 API", description = "게시글 상세 검색")
     @PostMapping("/search")
+    @LogExecutionTime
     public ResponseEntity<Message> searchPosts(@RequestBody SearchRequestDto searchRequestDto, Pageable pageable){
         List<CardPostResponseDto> searchResult = searchService.searchPost(searchRequestDto, pageable);
         return ResponseEntity.ok(Message.setSuccess(StatusEnum.OK, "검색 결과", searchResult));

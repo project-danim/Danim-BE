@@ -1,5 +1,6 @@
 package com.project.danim_be.review.controller;
 
+import com.project.danim_be.common.Anotation.LogExecutionTime;
 import com.project.danim_be.common.util.Message;
 import com.project.danim_be.review.dto.ReviewRequestDto;
 import com.project.danim_be.review.service.ReviewService;
@@ -20,12 +21,14 @@ public class ReviewController {
 
     @Operation(summary = "리뷰 작성 API", description = "리뷰 작성")
     @PostMapping("api/post/{postId}/review")
+    @LogExecutionTime
     public ResponseEntity<Message> createReview(@PathVariable Long postId, @RequestBody ReviewRequestDto reviewRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.createReview(postId, reviewRequestDto, userDetails.getMember());
     }
 
     @Operation(summary = "리뷰 조회 API", description = "리뷰 조회")
     @GetMapping("api/post/{postId}/review")
+    @LogExecutionTime
     public ResponseEntity<Message> readReview(@PathVariable Long postId) {
         return reviewService.readReview(postId);
     }

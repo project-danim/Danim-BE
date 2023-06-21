@@ -20,9 +20,11 @@ public class QReview extends EntityPathBase<Review> {
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QReview review1 = new QReview("review1");
+    public static final QReview review = new QReview("review");
 
     public final com.project.danim_be.common.entity.QTimestamped _super = new com.project.danim_be.common.entity.QTimestamped(this);
+
+    public final StringPath comment = createString("comment");
 
     //inherited
     public final DateTimePath<java.util.Date> createdAt = _super.createdAt;
@@ -37,8 +39,6 @@ public class QReview extends EntityPathBase<Review> {
     public final NumberPath<Double> point = createNumber("point", Double.class);
 
     public final com.project.danim_be.post.entity.QPost post;
-
-    public final StringPath review = createString("review");
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);
