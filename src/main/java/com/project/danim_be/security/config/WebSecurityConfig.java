@@ -153,6 +153,8 @@ public class WebSecurityConfig {
 		configuration.addAllowedMethod("POST");
 		configuration.addAllowedMethod("PUT");
 		configuration.addAllowedMethod("DELETE");
+		configuration.addAllowedMethod("UPDATE");
+		configuration.addAllowedMethod("OPTIONS");
 
 //		configuration.setAllowedMethods(Arrays.asList("*"));
 
