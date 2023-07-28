@@ -218,8 +218,6 @@ public class MemberService {
 
 
 
-
-
 		LoginResponseDto loginResponseDto = new LoginResponseDto(member, tokenDto.getAccessToken(), tokenDto.getRefreshToken());
 		Message message = Message.setSuccess(StatusEnum.OK, "로그인 성공", loginResponseDto);
 
