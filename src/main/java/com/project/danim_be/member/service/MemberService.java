@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.project.danim_be.common.exception.ErrorCode.FAIL_SIGNOUT;
 import static com.project.danim_be.common.exception.ErrorCode.USER_NOT_FOUND;
+import static com.project.danim_be.security.jwt.JwtUtil.REFRESH_KEY;
 
 @Slf4j
 @Service
@@ -201,19 +202,22 @@ public class MemberService {
 //				.secure(true)
 //				.domain("www.da-nim.com")
 //				.build();
-		
+
 		String refreshToken = tokenDto.getRefreshToken();
 		if(refreshToken.startsWith("Bearer ")){
 			refreshToken = refreshToken.substring(7);
 		}
-		
+
 //		Cookie refreshTokenCookie = new Cookie("REFRESH_KEY", tokenDto.getRefreshToken().substring(7));
-		Cookie refreshTokenCookie = new Cookie("REFRESH_KEY", refreshToken);
+		Cookie refreshTokenCookie = new Cookie(REFRESH_KEY, refreshToken);
 		refreshTokenCookie.setHttpOnly(true);
 //		refreshTokenCookie.setSecure(true);
 		refreshTokenCookie.setPath("/");
 		refreshTokenCookie.setDomain("www.da-nim.com");
 		response.addCookie(refreshTokenCookie);
+
+
+
 
 
 		LoginResponseDto loginResponseDto = new LoginResponseDto(member, tokenDto.getAccessToken(), tokenDto.getRefreshToken());
@@ -280,14 +284,14 @@ public class MemberService {
 	private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
 
 		response.addHeader(JwtUtil.ACCESS_KEY, tokenDto.getAccessToken());
-		response.addHeader(JwtUtil.REFRESH_KEY, tokenDto.getRefreshToken());
+		response.addHeader(REFRESH_KEY, tokenDto.getRefreshToken());
 
 	}
 
 	@Transactional
 	public ResponseEntity<Message> refreshAccessToken(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 
-		String refresh_token = jwtUtil.resolveToken(httpServletRequest, JwtUtil.REFRESH_KEY);
+		String refresh_token = jwtUtil.resolveToken(httpServletRequest, REFRESH_KEY);
 		System.out.println("Refresh_Token : " + refresh_token);
 		if(!jwtUtil.refreshTokenValid(refresh_token)) {
 			throw new CustomException(ErrorCode.INVALID_TOKEN);
